@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.3.0"
 	id("io.spring.dependency-management") version "1.1.5"
+	id("org.flywaydb.flyway") version "7.2.1"
 	kotlin("jvm") version "1.9.24"
 	kotlin("plugin.spring") version "1.9.24"
 }
@@ -38,4 +39,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+flyway {
+	driver = "org.postgresql.Driver"
+	url = "jdbc:postgresql://localhost:5432/bookmanagement"
+	user = "admin"
+	password = "password"
+	schemas = arrayOf("public")
+
 }
