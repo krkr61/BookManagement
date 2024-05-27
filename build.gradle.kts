@@ -6,6 +6,7 @@ plugins {
 	id("org.flywaydb.flyway") version "7.2.1"
 	kotlin("jvm") version "1.9.24"
 	kotlin("plugin.spring") version "1.9.24"
+	id("org.jooq.jooq-codegen-gradle") version "3.19.8"
 }
 
 group = "com.submission"
@@ -28,6 +29,7 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	jooqCodegen("org.postgresql:postgresql")
 }
 
 tasks.withType<KotlinCompile> {
@@ -41,11 +43,42 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+val jdbcDriver by extra("org.postgresql.Driver")
+val jdbcUrl by extra("jdbc:postgresql://localhost:5432/bookmanagement")
+val jdbcUser by extra("admin")
+val jdbcPassword by extra("password")
+val jdbcSchema by extra("public")
+
 flyway {
-	driver = "org.postgresql.Driver"
-	url = "jdbc:postgresql://localhost:5432/bookmanagement"
-	user = "admin"
-	password = "password"
-	schemas = arrayOf("public")
+	driver = jdbcDriver
+	url = jdbcUrl
+	user = jdbcUser
+	password = jdbcPassword
+	schemas = arrayOf(jdbcSchema)
 
 }
+
+jooq {
+	version = "3.19.8"
+	configuration {
+		jdbc {
+			driver = jdbcDriver
+			url = jdbcUrl
+			user = jdbcUser
+			password = jdbcPassword
+			}
+		generator {
+			database {
+				name = "org.jooq.meta.postgres.PostgresDatabase"
+				inputSchema = jdbcSchema
+				includes = ".*"
+			}
+			target {
+				packageName = "org.jooq.bookmanagement"
+				directory = "src/main/resources/generated/jooq/"
+			}
+		}
+	}
+}
+
+
