@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>著者追加</title>
+</head>
+<body>
+<h1>著者追加</h1>
+<form action="http://localhost:8080/insertauthor" method="post">
+    <label for="name">名前:</label>
+    <input type="text" id="name" name="name" required>
+    <br><br>
+
+    <label for="birthDate">生年月日:</label>
+    <input type="date" id="birthDate" name="birthDate">
+    <br><br>
+
+    <input type="number" id="delFlag" name="delFlag" value="0" min="0" required style="display:none">
+    <br><br>
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

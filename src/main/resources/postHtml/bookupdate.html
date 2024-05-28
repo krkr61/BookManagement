@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>書籍更新</title>
+</head>
+<body>
+<h1>書籍更新</h1>
+<form action="http://localhost:8080/updatebook" method="post">
+    <label for="id">書籍ID:</label>
+    <input type="number" id="id" name="id" required>
+    <br><br>
+
+    <label for="title">題名:</label>
+    <input type="text" id="title" name="title" required>
+    <br><br>
+
+    <label for="isbn">ISBN:</label>
+    <input type="text" id="isbn" name="isbn" required pattern="\d{13}">
+    <br><br>
+
+    <label for="publishedDate">発行日:</label>
+    <input type="date" id="publishedDate" name="publishedDate">
+    <br><br>
+
+    <label for="authorId">著者ID:</label>
+    <input type="number" id="authorId" name="authorId" required min="1">
+    <br><br>
+
+    <label for="delFlag">削除フラグ:</label>
+    <input type="number" id="delFlag" name="delFlag" value="0" min="0" required>
+    <br><br>
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
